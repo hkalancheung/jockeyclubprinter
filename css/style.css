@@ -1,0 +1,137 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased; }
+
+body {
+	background: #FFFFFF;
+	font-family: "Lato", Helvetica, Arial, sans-serif; }
+
+.invisible {
+	opacity: 0 !important;
+	display: none !important;
+	content: "" !important; }
+
+.cf {
+	display: block;
+	clear: both;
+	content: ""; }
+
+.paused {
+	animation-play-state: paused !important;
+	-webkit-animation-play-state: paused !important; }
+
+.noscroll {
+	overflow: hidden; }
+
+
+
+
+
+
+
+
+
+
+#overlay {
+	z-index: 20;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .8); }
+
+#overlay #overlay-wrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -325px;
+	margin-top: -325px;
+	width: 650px;
+	height: 650px;
+	background: #FFFFFF; }
+
+#overlay #overlay-image {
+	position: absolute;
+	top: 25px;
+	left: 25px;
+	width: 600px;
+	height: 500px;
+	background: center center no-repeat #DDDDDD;
+	background-size: contain; }
+
+#overlay .overlay-button {
+	overflow: hidden;
+	position: absolute;
+	display: table;
+	width: 275px;
+	height: 75px;
+	bottom: 25px;
+	border-radius: 15px; }
+
+#overlay #overlay-confirm.overlay-button {
+	left: 25px;
+	background-color: #2ECC40; }
+
+#overlay #overlay-cancel.overlay-button {
+	right: 25px;
+	background-color: #FF4136; }
+
+#overlay .overlay-button a {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	font-size: 42px;
+	font-weight: 700;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	text-align: center; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+#topbar {
+	z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 80px;
+	background: #FFFFFF;
+	border-bottom: 5px solid #CCCCCC; }
+
+
+
+
+#feed {
+	z-index: 0;
+	position: relative;
+	padding-top: 80px; }
+
+#feed ul {
+	list-style: none; }
+
+#feed ul li {
+	float: left;
+	width: 50%;
+	height: 50vw;
+	background: center center no-repeat transparent;
+	background-size: cover; }
+
+#feed ul li a {
+	display: block;
+	width: 100%;
+	height: 100%; }
