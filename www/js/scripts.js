@@ -173,9 +173,31 @@ function photobooth_load (int, target) {
 
 			for (i = 0; i < data.results.length; i++) {
 
-				image = data.results[i].item.images.standard_resolution.http_url
-				username = data.results[i].item.user.username;
-				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
+				if (data.results[i].type == "FACEBOOK_POST_ITEM") {
+
+					image = data.results[i].item.entry_graph.body.images[0];
+					username = data.results[i].item.username;
+					type = "facebook";
+
+				}
+
+				else if (data.results[i].type == "TWEET_ITEM") {
+
+					image = data.results[i].item.media.media_url;
+					username = data.results[i].item.username.slice(1, data.results[i].item.username.length);
+					type = "twitter";
+
+				}
+
+				else {
+
+					image = data.results[i].item.images.standard_resolution.http_url;
+					username = data.results[i].item.user.username;
+					type = "instagram";
+
+				};
+
+				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "' class='" + type + "'><span></span></li>");
 
 			};
 			

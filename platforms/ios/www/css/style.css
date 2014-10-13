@@ -140,7 +140,7 @@ body {
 	border-bottom: 5px solid #CCCCCC; }
 
 #topbar #topbar-search {
-	width: calc(100% - 50px - 40px);
+	width: calc(100% - 250px);
 	height: 55px;
 	position: absolute;
 	left: 10px;
@@ -151,14 +151,31 @@ body {
 	border: 2px solid #CCCCCC;
 	background: url("../img/topbar_search.svg") 10px center no-repeat transparent; }
 
-#topbar #topbar-refresh {
+#topbar #topbar-tools {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	list-style: none; }
+
+#topbar #topbar-tools li {
+	float: left;
+	margin-right: 10px;
 	width: 55px;
 	height: 55px;
 	border: 2px solid #CCCCCC;
-	background: url("../img/topbar_refresh.svg") center center no-repeat transparent; }
+	background: center center no-repeat transparent; }
+
+#topbar #topbar-tools li:last-child {
+	margin-right: 0; }
+
+#topbar #topbar-tools #topbar-previous {
+	background-image: url("../img/topbar_tools_previous.svg"); }
+
+#topbar #topbar-tools #topbar-next {
+	background-image: url("../img/topbar_tools_next.svg"); }
+
+#topbar #topbar-tools #topbar-refresh {
+	background-image: url("../img/topbar_tools_refresh.svg"); }
 
 #feed {
 	z-index: 0;
@@ -176,8 +193,27 @@ body {
 	list-style: none; }
 
 #feed #feed-list li {
+	position: relative;
 	float: left;
 	width: 25%;
 	height: 25vw;
 	background: center center no-repeat transparent;
 	background-size: cover; }
+
+#feed #feed-list li span {
+	opacity: .75;
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+	width: 50px;
+	height: 50px;
+	background: center center no-repeat transparent; }
+
+#feed #feed-list li.facebook span {
+	background-image: url("../img/feed_facebook.svg"); }
+
+#feed #feed-list li.twitter span {
+	background-image: url("../img/feed_twitter.svg"); } 
+
+#feed #feed-list li.instagram span {
+	background-image: url("../img/feed_instagram.svg"); } 

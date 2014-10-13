@@ -50,7 +50,7 @@ var app = {
 
 
 
-var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image = null;
+var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_previous, feed_next;
 
 
 
@@ -139,28 +139,65 @@ function photobooth_search () {
 
 
 
-function photobooth_load () {
+function photobooth_load (int, target) {
 
 	loading_cache.removeClass("invisible");
 	topbar_cache.find("#topbar-search").val("").blur();
 	$("#feed #feed-list").empty();
 
+	if (int == true) {
+
+		source = "lib/data.json";
+
+	}
+
+	else {
+
+		source = target;
+
+	};
+
 	$.ajax({
 
-		url: "lib/data.json?" + new Date().getTime(),
+		url: source + "?" + new Date().getTime(),
 		type: "GET",
 		dataType: "json",
 		crossDomain: true,
 		contentType: "application/json",
 		success: function (data) {
 
+			feed_previous = data.prev_url;
+			feed_next = data.next_url;
+
 			$("#feed #feed-list").empty();
 
 			for (i = 0; i < data.results.length; i++) {
 
-				image = data.results[i].item.images.standard_resolution.http_url
-				username = data.results[i].item.user.username;
-				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
+				if (data.results[i].type == "FACEBOOK_POST_ITEM") {
+
+					image = data.results[i].item.entry_graph.body.images[0];
+					username = data.results[i].item.username;
+					type = "facebook";
+
+				}
+
+				else if (data.results[i].type == "TWEET_ITEM") {
+
+					image = data.results[i].item.media.media_url;
+					username = data.results[i].item.username.slice(1, data.results[i].item.username.length);
+					type = "twitter";
+
+				}
+
+				else {
+
+					image = data.results[i].item.images.standard_resolution.http_url;
+					username = data.results[i].item.user.username;
+					type = "instagram";
+
+				};
+
+				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "' class='" + type + "'><span></span></li>");
 
 			};
 			
@@ -169,6 +206,7 @@ function photobooth_load () {
 		error: function(xhr, status, error) {
 			
 			console.error("error");
+			//alert("Error. Something may be wrong with the internet connection.");
 
 		}
 		
@@ -194,11 +232,23 @@ $(document).ready(function() {
 	overlay_cache = $("#overlay");
 	topbar_cache = $("#topbar");
 
-	photobooth_load();
+	photobooth_load(true);
 
 	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
 	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
 	$("#topbar #topbar-refresh").hammer().bind("tap", photobooth_load);
+
+	$("#topbar #topbar-tools #topbar-previous").hammer().bind("tap", function() {
+
+		photobooth_load(false, feed_previous);
+
+	});
+
+	$("#topbar #topbar-tools #topbar-next").hammer().bind("tap", function() {
+
+		photobooth_load(false, feed_next);
+
+	});
 
 });
