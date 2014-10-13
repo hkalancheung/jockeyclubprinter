@@ -71,6 +71,8 @@ function photobooth_overlay (target) {
 
 	current_image = target.attr("data-image");
 
+	topbar_cache.find("#topbar-search").blur();
+
 	overlay_cache.find("#overlay-image").css("background-image", "url(" + current_image + ")");
 	overlay_cache.find("#overlay-text span").html(target.attr("data-username"));
 	overlay_cache.removeClass("invisible");
@@ -83,7 +85,9 @@ function photobooth_print () {
 
 	loading_cache.removeClass("invisible");
 
-	cordova.plugins.printer.print(current_image, 'Document.html', function () {
+	foo = "<img src='" + current_image + "' alt='' style='width: 100%; height: auto; border: none;' />";
+
+	cordova.plugins.printer.print(foo, {}, function () {
 
     	loading_cache.addClass("invisible");
     	photobooth_close();
@@ -139,6 +143,7 @@ function photobooth_load () {
 
 	loading_cache.removeClass("invisible");
 	topbar_cache.find("#topbar-search").val("").blur();
+	$("#feed #feed-list").empty();
 
 	$.ajax({
 
@@ -149,13 +154,13 @@ function photobooth_load () {
 		contentType: "application/json",
 		success: function (data) {
 
-			$("#feed ul").empty();
+			$("#feed #feed-list").empty();
 
 			for (i = 0; i < data.results.length; i++) {
 
 				image = data.results[i].item.images.standard_resolution.http_url
 				username = data.results[i].item.user.username;
-				$("#feed ul").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
+				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
 
 			};
 			
@@ -173,7 +178,7 @@ function photobooth_load () {
 
 		loading_cache.addClass("invisible");
 
-		feed_cache = $("#feed ul li");
+		feed_cache = $("#feed #feed-list li");
 
 		photobooth_bind();
 

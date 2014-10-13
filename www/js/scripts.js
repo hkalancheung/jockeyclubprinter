@@ -50,7 +50,7 @@ var app = {
 
 
 
-var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image = null;
+var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_previous, feed_next;
 
 
 
@@ -71,6 +71,8 @@ function photobooth_overlay (target) {
 
 	current_image = target.attr("data-image");
 
+	topbar_cache.find("#topbar-search").blur();
+
 	overlay_cache.find("#overlay-image").css("background-image", "url(" + current_image + ")");
 	overlay_cache.find("#overlay-text span").html(target.attr("data-username"));
 	overlay_cache.removeClass("invisible");
@@ -83,7 +85,9 @@ function photobooth_print () {
 
 	loading_cache.removeClass("invisible");
 
-	cordova.plugins.printer.print(current_image, 'Document.html', function () {
+	foo = "<img src='" + current_image + "' alt='' style='width: 100%; height: auto; border: none;' />";
+
+	cordova.plugins.printer.print(foo, {}, function () {
 
     	loading_cache.addClass("invisible");
     	photobooth_close();
@@ -135,27 +139,43 @@ function photobooth_search () {
 
 
 
-function photobooth_load () {
+function photobooth_load (int, target) {
 
 	loading_cache.removeClass("invisible");
 	topbar_cache.find("#topbar-search").val("").blur();
+	$("#feed #feed-list").empty();
+
+	if (int == true) {
+
+		source = "lib/data.json";
+
+	}
+
+	else {
+
+		source = target;
+
+	};
 
 	$.ajax({
 
-		url: "lib/data.json?" + new Date().getTime(),
+		url: source + "?" + new Date().getTime(),
 		type: "GET",
 		dataType: "json",
 		crossDomain: true,
 		contentType: "application/json",
 		success: function (data) {
 
-			$("#feed ul").empty();
+			feed_previous = data.prev_url;
+			feed_next = data.next_url;
+
+			$("#feed #feed-list").empty();
 
 			for (i = 0; i < data.results.length; i++) {
 
 				image = data.results[i].item.images.standard_resolution.http_url
 				username = data.results[i].item.user.username;
-				$("#feed ul").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
+				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "'></li>");
 
 			};
 			
@@ -164,6 +184,7 @@ function photobooth_load () {
 		error: function(xhr, status, error) {
 			
 			console.error("error");
+			//alert("Error. Something may be wrong with the internet connection.");
 
 		}
 		
@@ -173,7 +194,7 @@ function photobooth_load () {
 
 		loading_cache.addClass("invisible");
 
-		feed_cache = $("#feed ul li");
+		feed_cache = $("#feed #feed-list li");
 
 		photobooth_bind();
 
@@ -189,11 +210,23 @@ $(document).ready(function() {
 	overlay_cache = $("#overlay");
 	topbar_cache = $("#topbar");
 
-	photobooth_load();
+	photobooth_load(true);
 
 	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
 	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
 	$("#topbar #topbar-refresh").hammer().bind("tap", photobooth_load);
+
+	$("#topbar #topbar-tools #topbar-previous").hammer().bind("tap", function() {
+
+		photobooth_load(false, feed_previous);
+
+	});
+
+	$("#topbar #topbar-tools #topbar-next").hammer().bind("tap", function() {
+
+		photobooth_load(false, feed_next);
+
+	});
 
 });

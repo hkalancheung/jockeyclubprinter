@@ -169,14 +169,15 @@ body {
 	height: calc(100% - 80px);
 	overflow: hidden;
 	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch; }
+	-webkit-overflow-scrolling: touch;
+	background: #FFFFFF; }
 
-#feed ul {
+#feed #feed-list {
 	list-style: none; }
 
-#feed ul li {
+#feed #feed-list li {
 	float: left;
-	width: 50%;
-	height: 50vw;
+	width: 25%;
+	height: 25vw;
 	background: center center no-repeat transparent;
 	background-size: cover; }
