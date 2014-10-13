@@ -18,9 +18,6 @@ body {
 	clear: both;
 	content: ""; }
 
-.noscroll {
-	overflow: hidden; }
-
 #loading {
 	z-index: 30;
 	position: fixed;
