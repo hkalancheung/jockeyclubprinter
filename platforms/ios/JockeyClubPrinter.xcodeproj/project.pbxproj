@@ -38,6 +38,7 @@
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		6CC8EE2A16D04F4BB16CF470 /* APPPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = 697D67979E0444DF8125A36B /* APPPrinter.m */; };
+		FFFABBAA101B49B8B7F3DD54 /* APPHiddenStatusbarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5A595C735C436CA1A2E8CA /* APPHiddenStatusbarOverlay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = JockeyClubPrinter/config.xml; sourceTree = "<group>"; };
 		697D67979E0444DF8125A36B /* APPPrinter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "APPPrinter.m"; path = "de.appplant.cordova.plugin.printer/APPPrinter.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		7888F29A84B84168A9A5340D /* APPPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "APPPrinter.h"; path = "de.appplant.cordova.plugin.printer/APPPrinter.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		1E5A595C735C436CA1A2E8CA /* APPHiddenStatusbarOverlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "APPHiddenStatusbarOverlay.m"; path = "de.appplant.cordova.plugin.hidden-statusbar-overlay/APPHiddenStatusbarOverlay.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		C0D202D7B7F94855B5C74DFB /* APPHiddenStatusbarOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "APPHiddenStatusbarOverlay.h"; path = "de.appplant.cordova.plugin.hidden-statusbar-overlay/APPHiddenStatusbarOverlay.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 				A946D0E8237945FABAAF0D33 /* CDVStatusBar.h */,
 				697D67979E0444DF8125A36B /* APPPrinter.m */,
 				7888F29A84B84168A9A5340D /* APPPrinter.h */,
+				1E5A595C735C436CA1A2E8CA /* APPHiddenStatusbarOverlay.m */,
+				C0D202D7B7F94855B5C74DFB /* APPHiddenStatusbarOverlay.h */,
 			);
 			name = Plugins;
 			path = JockeyClubPrinter/Plugins;
@@ -422,6 +427,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				6CC8EE2A16D04F4BB16CF470 /* APPPrinter.m in Sources */,
+				FFFABBAA101B49B8B7F3DD54 /* APPHiddenStatusbarOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

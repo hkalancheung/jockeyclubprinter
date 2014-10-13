@@ -22,6 +22,9 @@
     <feature name="Printer">
         <param name="ios-package" value="APPPrinter" />
     </feature>
+    <feature name="HiddenStatusbarOverlay">
+        <param name="ios-package" value="APPHiddenStatusbarOverlay" />
+    </feature>
     <name>JockeyClubPrinter</name>
     <description>
         Jockey Club Printer.
@@ -33,7 +36,6 @@
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="UIWebViewBounce" value="false" />
-    <preference name="fullscreen" value="true" />
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <gap:plugin name="de.appplant.cordova.plugin.printer" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
 </widget>

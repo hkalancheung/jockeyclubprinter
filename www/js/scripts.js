@@ -237,7 +237,6 @@ $(document).ready(function() {
 	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
 	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
-	$("#topbar #topbar-refresh").hammer().bind("tap", photobooth_load);
 
 	$("#topbar #topbar-tools #topbar-previous").hammer().bind("tap", function() {
 
@@ -245,7 +244,7 @@ $(document).ready(function() {
 
 	});
 
-	$("#topbar #topbar-tools #topbar-next").hammer().bind("tap", function() {
+	$("#topbar #topbar-tools #topbar-next, #topbar #topbar-refresh").hammer().bind("tap", function() {
 
 		photobooth_load(false, feed_next);
 
