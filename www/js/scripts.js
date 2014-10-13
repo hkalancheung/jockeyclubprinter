@@ -34,7 +34,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        StatusBar.hide();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -51,27 +50,7 @@ var app = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var loading_cachce, overlay_cache, topbar_cache, feed_cache = null;
+var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image = null;
 
 
 
@@ -90,7 +69,9 @@ function photobooth_bind () {
 
 function photobooth_overlay (target) {
 
-	overlay_cache.find("#overlay-image").css("background-image", "url(" + target.attr("data-image") + ")");
+	current_image = target.attr("data-image");
+
+	overlay_cache.find("#overlay-image").css("background-image", "url(" + current_image + ")");
 	overlay_cache.find("#overlay-text span").html(target.attr("data-username"));
 	overlay_cache.removeClass("invisible");
 
@@ -98,8 +79,24 @@ function photobooth_overlay (target) {
 
 
 
+function photobooth_print () {
+
+	loading_cache.removeClass("invisible");
+
+	cordova.plugins.printer.print(current_image, 'Document.html', function () {
+
+    	loading_cache.addClass("invisible");
+    	photobooth_close();
+
+	});
+
+};
+
+
+
 function photobooth_close () {
 
+	current_image = null;
 	overlay_cache.addClass("invisible");
 
 };
@@ -195,6 +192,7 @@ $(document).ready(function() {
 	photobooth_load();
 
 	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
+	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
 	$("#topbar #topbar-refresh").hammer().bind("tap", photobooth_load);
 

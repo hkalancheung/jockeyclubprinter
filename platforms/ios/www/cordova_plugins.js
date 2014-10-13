@@ -1,17 +1,18 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
-        "id": "org.apache.cordova.statusbar.statusbar",
+        "file": "plugins/de.appplant.cordova.plugin.printer/www/printer.js",
+        "id": "de.appplant.cordova.plugin.printer.Printer",
         "clobbers": [
-            "window.StatusBar"
+            "plugin.printer",
+            "cordova.plugins.printer"
         ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "org.apache.cordova.statusbar": "0.1.8"
+    "de.appplant.cordova.plugin.printer": "0.7.1-dev"
 }
 // BOTTOM OF METADATA
 });

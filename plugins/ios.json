@@ -9,15 +9,7 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" onload=\"true\" value=\"CDVStatusBar\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
+                            "xml": "<feature name=\"Printer\"><param name=\"ios-package\" value=\"APPPrinter\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -26,7 +18,7 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.statusbar": {
+        "de.appplant.cordova.plugin.printer": {
             "PACKAGE_NAME": "com.jockeyclub.printer"
         }
     },

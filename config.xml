@@ -13,4 +13,5 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="fullscreen" value="true" />
     <preference name="StatusBarOverlaysWebView" value="true" />
+    <gap:plugin name="de.appplant.cordova.plugin.printer" />
 </widget>
