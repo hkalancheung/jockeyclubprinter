@@ -124,13 +124,12 @@ function photobooth_search () {
 
 };
 
-
+var test;
 
 function photobooth_load (int, target) {
 
 	loading_cache.removeClass("invisible");
 	topbar_cache.find("#topbar-search").val("").blur();
-	$("#feed #feed-list").empty();
 
 	if (int == true) {
 
@@ -153,8 +152,15 @@ function photobooth_load (int, target) {
 		contentType: "application/json",
 		success: function (data) {
 
+			$("#feed #feed-list").empty();
+
+			test = data;
+
 			feed_previous = data.contents.prev_url;
 			feed_next = data.contents.next_url;
+
+	    	$("#bottombar #time-from").html(moment(data.contents.results[0].creation_time).startOf("minute").fromNow());
+	    	$("#bottombar #time-to").html(moment(data.contents.results[data.contents.results.length - 1].creation_time).startOf("minute").fromNow());
 
 			$("#feed #feed-list").empty();
 
@@ -210,6 +216,7 @@ function photobooth_load (int, target) {
 
 		loading_cache.addClass("invisible");
 
+		$("#feed").scrollTop(0);
 		feed_cache = $("#feed #feed-list li");
 
 		photobooth_bind();
