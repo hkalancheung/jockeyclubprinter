@@ -7,8 +7,8 @@
 		<script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
 		<script type="text/javascript" src="js/hammer.min.js"></script>
 		<script type="text/javascript" src="js/jquery.hammer.js"></script>
+		<script type="text/javascript" src="js/moment.js"></script>
 		<script type="text/javascript" src="js/scripts.js"></script>
-		<script src="http://172.16.38.86:8081/target/target-script-min.js"></script>
 	</head>
 
 	<body>
@@ -50,9 +50,8 @@
 
 			<ul id="topbar-tools">
 
-				<li id="topbar-previous"><span>Prev</span></li>
-				<li id="topbar-next"><span>Next</span></li>
-				<li id="topbar-refresh"><span>Restart</span></li>
+				<li id="topbar-latest"><span>Latest</span></li>
+				<li id="topbar-earlier"><span>Earlier</span></li>
 
 			</ul>
 
@@ -61,11 +60,19 @@
 
 
 		<div id="feed">
-			
+
 			<ul id="feed-list">
 			</ul>
 
 			<div class="cf"></Div>
+
+		</div>
+
+
+
+		<div id="bottombar">
+			
+			<div id="bottombar-time">Showing posts between <span id="time-from">...</span> and <span id="time-to">...</span>.</div>
 
 		</div>
 

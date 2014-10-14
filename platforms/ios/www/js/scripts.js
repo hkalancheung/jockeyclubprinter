@@ -36,7 +36,7 @@ var app = {
 
 
 
-var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_previous, feed_next;
+var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
 var feed_source = "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
@@ -126,11 +126,34 @@ function photobooth_search () {
 
 
 
+function photobooth_time () {
+
+	clearInterval(feed_time_interval);
+
+	function update () {
+
+		console.log("updating timestamps");
+		$("#bottombar #time-from").html(moment(feed_time_earliest).startOf("minute").fromNow());
+		$("#bottombar #time-to").html(moment(feed_time_latest).startOf("minute").fromNow());
+
+	};
+
+	update();
+
+	feed_time_interval = setInterval(function() {
+
+		update();
+
+	}, 30000);
+
+};
+
+
+
 function photobooth_load (int, target) {
 
 	loading_cache.removeClass("invisible");
 	topbar_cache.find("#topbar-search").val("").blur();
-	$("#feed #feed-list").empty();
 
 	if (int == true) {
 
@@ -153,8 +176,13 @@ function photobooth_load (int, target) {
 		contentType: "application/json",
 		success: function (data) {
 
-			feed_previous = data.contents.prev_url;
-			feed_next = data.contents.next_url;
+			$("#feed #feed-list").empty();
+
+			feed_earlier = data.contents.next_url;
+			feed_time_earliest = data.contents.results[0].creation_time;
+			feed_time_latest = data.contents.results[data.contents.results.length - 1].creation_time;
+
+			photobooth_time();
 
 			$("#feed #feed-list").empty();
 
@@ -210,6 +238,7 @@ function photobooth_load (int, target) {
 
 		loading_cache.addClass("invisible");
 
+		$("#feed").scrollTop(0);
 		feed_cache = $("#feed #feed-list li");
 
 		photobooth_bind();
@@ -238,19 +267,13 @@ $(document).ready(function() {
 	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
 
-	$("#topbar #topbar-tools #topbar-previous").hammer().bind("tap", function() {
+	$("#topbar #topbar-tools #topbar-earlier").hammer().bind("tap", function() {
 
-		photobooth_load(false, feed_previous);
-
-	});
-
-	$("#topbar #topbar-tools #topbar-next, #topbar #topbar-refresh").hammer().bind("tap", function() {
-
-		photobooth_load(false, feed_next);
+		photobooth_load(false, feed_earlier);
 
 	});
 
-	$("#topbar #topbar-refresh").hammer().bind("tap", function() {
+	$("#topbar #topbar-latest").hammer().bind("tap", function() {
 
 		photobooth_load(true, null);
 

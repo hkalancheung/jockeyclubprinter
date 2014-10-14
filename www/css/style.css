@@ -148,7 +148,7 @@ body {
 	border-bottom: 5px solid #777777; }
 
 #topbar #topbar-search {
-	width: calc(100% - 250px);
+	width: calc(100% - 200px);
 	height: 55px;
 	position: absolute;
 	left: 10px;
@@ -170,20 +170,17 @@ body {
 	float: left;
 	width: 75px;
 	height: 75px;
-	/* border-left: 2px solid #777777; */
 	background: center 10px no-repeat #EEEEEE; }
 
 #topbar #topbar-tools li:last-child {
 	margin-right: 0; }
 
-#topbar #topbar-tools #topbar-previous {
-	background-image: url("../img/topbar_tools_previous.svg"); }
+#topbar #topbar-tools #topbar-latest {
+	font-weight: 700;
+	background-image: url("../img/topbar_tools_latest.svg"); }
 
-#topbar #topbar-tools #topbar-next {
-	background-image: url("../img/topbar_tools_next.svg"); }
-
-#topbar #topbar-tools #topbar-refresh {
-	background-image: url("../img/topbar_tools_refresh.svg"); }
+#topbar #topbar-tools #topbar-earlier {
+	background-image: url("../img/topbar_tools_earlier.svg"); }
 
 #topbar #topbar-tools li span {
 	position: absolute;
