@@ -1,56 +1,43 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
-    // Application Constructor
-    initialize: function() {
+    
+    initialize: function () {
+
         this.bindEvents();
+
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+
+    bindEvents: function () {
+
+        document.addEventListener("deviceready", this.onDeviceReady, false);
+
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+
+    onDeviceReady: function () {
+
+        app.receivedEvent("deviceready");
+
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
+
+
+    receivedEvent: function (id) {
+
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        var listeningElement = parentElement.querySelector(".listening");
+        var receivedElement = parentElement.querySelector(".received");
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        listeningElement.setAttribute("style", "display: none;");
+        receivedElement.setAttribute("style", "display: block;");
 
-        console.log('Received Event: ' + id);
+        console.log("Received Event: " + id);
+
     }
+
 };
 
 
 
 var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_previous, feed_next;
+var feed_source = "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
 
@@ -147,11 +134,11 @@ function photobooth_load (int, target) {
 
 	if (int == true) {
 
-		source = "lib/data.json";
+		source = feed_source;
 
 	}
 
-	else {
+	else if (int == false) {
 
 		source = target;
 
@@ -159,40 +146,47 @@ function photobooth_load (int, target) {
 
 	$.ajax({
 
-		url: source + "?" + new Date().getTime(),
+		url: "http://tools.icgx.co/hkjc/getData.php?url=" + encodeURIComponent(source) + "?" + new Date().getTime(),
 		type: "GET",
 		dataType: "json",
 		crossDomain: true,
 		contentType: "application/json",
 		success: function (data) {
 
-			feed_previous = data.prev_url;
-			feed_next = data.next_url;
+			feed_previous = data.contents.prev_url;
+			feed_next = data.contents.next_url;
 
 			$("#feed #feed-list").empty();
 
-			for (i = 0; i < data.results.length; i++) {
+			for (i = 0; i < data.contents.results.length; i++) {
 
-				if (data.results[i].type == "FACEBOOK_POST_ITEM") {
+				if (data.contents.results[i].type == "FACEBOOK_POST_ITEM") {
 
-					image = data.results[i].item.entry_graph.body.images[0];
-					username = data.results[i].item.username;
+					image = data.contents.results[i].item.rss_post_media.url;
+					username = data.contents.results[i].item.realname;
 					type = "facebook";
 
 				}
 
-				else if (data.results[i].type == "TWEET_ITEM") {
+				else if (data.contents.results[i].type == "TWEET_ITEM") {
 
-					image = data.results[i].item.media.media_url;
-					username = data.results[i].item.username.slice(1, data.results[i].item.username.length);
+					image = data.contents.results[i].item.rss_post_media.url;
+
+					if (image.slice(7, 20) == "pbs.twimg.com") {
+
+						image = image + ":large";
+
+					};
+
+					username = data.contents.results[i].item.username.slice(1, data.contents.results[i].item.username.length);
 					type = "twitter";
 
 				}
 
 				else {
 
-					image = data.results[i].item.images.standard_resolution.http_url;
-					username = data.results[i].item.user.username;
+					image = data.contents.results[i].item.images.standard_resolution.http_url;
+					username = data.contents.results[i].item.user.username;
 					type = "instagram";
 
 				};
@@ -232,7 +226,13 @@ $(document).ready(function() {
 	overlay_cache = $("#overlay");
 	topbar_cache = $("#topbar");
 
-	photobooth_load(true);
+	photobooth_load(true, null);
+
+	$("#loading #loading-refresh").hammer().bind("tap", function() {
+
+		location.reload();
+
+	});
 
 	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
 	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
@@ -247,6 +247,12 @@ $(document).ready(function() {
 	$("#topbar #topbar-tools #topbar-next, #topbar #topbar-refresh").hammer().bind("tap", function() {
 
 		photobooth_load(false, feed_next);
+
+	});
+
+	$("#topbar #topbar-refresh").hammer().bind("tap", function() {
+
+		photobooth_load(true, null);
 
 	});
 

@@ -49,6 +49,17 @@ body {
 #loading.invisible #loading-loader {
 	-webkit-animation-play-state: paused !important; }
 
+#loading #loading-refresh {
+	opacity: .5;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 25px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #FFFFFF;
+	text-decoration: underline; }
+
 #overlay {
 	z-index: 20;
 	position: fixed;
