@@ -25,16 +25,31 @@
 
 
 
-		<div id="overlay" class="invisible">
+		<div id="overlay" class="photobooth-modal invisible">
 
-			<div id="overlay-wrapper">
+			<div id="overlay-print" class="overlay-wrapper invisible">
 
-				<div id="overlay-image"></div>
+				<div id="print-image"></div>
 
-				<div id="overlay-text">Posted by: <span></span></div>
+				<div id="print-text">Posted by: <span></span></div>
 
-				<div id="overlay-confirm" class="overlay-button"><div class="button-wrapper">Print</div></div>
-				<div id="overlay-cancel" class="overlay-button"><div class="button-wrapper">Cancel</div></div>
+				<div id="print-confirm" class="print-button"><div class="button-wrapper">Print</div></div>
+				<div id="print-cancel" class="print-button"><div class="button-wrapper">Cancel</div></div>
+
+			</div>
+
+			<div id="overlay-options" class="overlay-wrapper invisible">
+
+				<h1>Select which printer to print to:</h1>
+
+				<ul id="options-printers">
+					<li class="current" data-printer="1"><span>Printer #1</span></li>
+					<li data-printer="2"><span>Printer #2</span></li>
+					<li data-printer="3"><span>Printer #3</span></li>
+					<li data-printer="4"><span>Printer #4</span></li>
+				</ul>
+
+				<div id="options-close"><span>Close</span></div>
 
 			</div>
 
@@ -46,12 +61,16 @@
 
 		<div id="topbar">
 
+			<ul id="topbar-options" class="topbar-buttons">
+				<li><span>Options</span></li>
+			</ul>
+
 			<input type="text" id="topbar-search" placeholder="username / real name" autocapitalize="off" autocorrect="off" />
 
-			<ul id="topbar-tools">
+			<ul id="topbar-navigation" class="topbar-buttons">
 
-				<li id="topbar-latest"><span>Latest</span></li>
-				<li id="topbar-earlier"><span>Earlier</span></li>
+				<li id="navigation-latest"><span>Latest</span></li>
+				<li id="navigation-earlier"><span>Earlier</span></li>
 
 			</ul>
 

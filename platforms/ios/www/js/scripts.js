@@ -36,7 +36,8 @@ var app = {
 
 
 
-var loading_cachce, overlay_cache, topbar_cache, feed_cache, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
+var loading_cachce, overlay_cache, options_cache, topbar_cache, feed_cache, overlay_current, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
+var printer_current = 1;
 var feed_source = "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
@@ -46,7 +47,7 @@ function photobooth_bind () {
 	feed_cache.hammer().bind("tap", function() {
 
 		event.preventDefault();
-		photobooth_overlay($(this));
+		photobooth_overlay("print", $(this));
 
 	});
 
@@ -54,15 +55,35 @@ function photobooth_bind () {
 
 
 
-function photobooth_overlay (target) {
+function photobooth_overlay (type, target) {
 
-	current_image = target.attr("data-image");
+	overlay_current = type;
 
-	topbar_cache.find("#topbar-search").blur();
+	if (type == "print") {
 
-	overlay_cache.find("#overlay-image").css("background-image", "url(" + current_image + ")");
-	overlay_cache.find("#overlay-text span").html(target.attr("data-username"));
+		current_image = target.attr("data-image");
+		topbar_cache.find("#topbar-search").blur();
+		overlay_cache.find("#print-image").css("background-image", "url(" + current_image + ")");
+		overlay_cache.find("#print-text span").html(target.attr("data-username"));
+		overlay_cache.find("#overlay-print").removeClass("invisible");
+
+	}
+
+	else if (type == "options") {
+
+		overlay_cache.find("#overlay-options").removeClass("invisible");
+
+	};
+
 	overlay_cache.removeClass("invisible");
+
+};
+
+
+
+function photobooth_options () {
+
+	options_cache.removeClass("invisible");
 
 };
 
@@ -87,7 +108,19 @@ function photobooth_print () {
 
 function photobooth_close () {
 
-	current_image = null;
+	if (overlay_current == "print") {
+
+		current_image = null;
+		overlay_cache.find("#overlay-print").addClass("invisible");
+
+	}
+
+	else if (overlay_current == "options") {
+
+		overlay_cache.find("#overlay-options").addClass("invisible");
+
+	};
+
 	overlay_cache.addClass("invisible");
 
 };
@@ -150,10 +183,20 @@ function photobooth_time () {
 
 
 
+function photobooth_printer (target) {
+
+	printer_current = $(target).attr("data-printer");
+
+	overlay_cache.find("#overlay-options #options-printers li.current").removeClass("current");
+	$(target).addClass("current");
+
+};
+
+
+
 function photobooth_load (int, target) {
 
 	loading_cache.removeClass("invisible");
-	topbar_cache.find("#topbar-search").val("").blur();
 
 	if (int == true) {
 
@@ -176,6 +219,7 @@ function photobooth_load (int, target) {
 		contentType: "application/json",
 		success: function (data) {
 
+			topbar_cache.find("#topbar-search").val("").blur();
 			$("#feed #feed-list").empty();
 
 			feed_earlier = data.contents.next_url;
@@ -255,7 +299,15 @@ $(document).ready(function() {
 	overlay_cache = $("#overlay");
 	topbar_cache = $("#topbar");
 
-	photobooth_load(true, null);
+	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
+	$("#topbar #topbar-search").on("input", photobooth_search);
+	
+	$("#topbar #topbar-options li").hammer().bind("tap", function() {
+
+		event.preventDefault();
+		photobooth_overlay("options", null);
+
+	});
 
 	$("#loading #loading-refresh").hammer().bind("tap", function() {
 
@@ -263,20 +315,30 @@ $(document).ready(function() {
 
 	});
 
-	$("#overlay #overlay-cancel, #overlay #overlay-cover").hammer().bind("tap", photobooth_close);
-	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
-	$("#topbar #topbar-search").on("input", photobooth_search);
+	$("#overlay #overlay-print #print-cancel, #overlay #overlay-options #options-close, #overlay #overlay-cover").hammer().bind("tap", function() {
 
-	$("#topbar #topbar-tools #topbar-earlier").hammer().bind("tap", function() {
+		photobooth_close();
+
+	});
+
+	overlay_cache.find("#overlay-options #options-printers li").hammer().bind("tap", function() {
+
+		photobooth_printer($(this));
+
+	});
+
+	$("#topbar #topbar-navigation #navigation-earlier").hammer().bind("tap", function() {
 
 		photobooth_load(false, feed_earlier);
 
 	});
 
-	$("#topbar #topbar-latest").hammer().bind("tap", function() {
+	$("#topbar #topbar-navigation #navigation-latest").hammer().bind("tap", function() {
 
 		photobooth_load(true, null);
 
 	});
+
+	photobooth_load(true, null);
 
 });

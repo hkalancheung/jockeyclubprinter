@@ -69,7 +69,7 @@ body {
 	height: 100%;
 	background: rgba(0, 0, 0, .8); }
 
-#overlay #overlay-wrapper {
+#overlay .overlay-wrapper {
 	z-index: 10;
 	position: absolute;
 	top: 50%;
@@ -80,7 +80,7 @@ body {
 	height: 700px;
 	background: #FFFFFF; }
 
-#overlay #overlay-image {
+#overlay #overlay-print #print-image {
 	position: absolute;
 	top: 25px;
 	left: 25px;
@@ -89,7 +89,7 @@ body {
 	background: center center no-repeat #DDDDDD;
 	background-size: contain; }
 
-#overlay #overlay-text {
+#overlay #overlay-print #print-text {
 	position: absolute;
 	bottom: 90px;
 	left: 0;
@@ -97,10 +97,10 @@ body {
 	text-align: center;
 	font-size: 16px; }
 
-#overlay #overlay-text span {
+#overlay #overlay-print #print-text span {
 	font-weight: bold; }
 
-#overlay .overlay-button {
+#overlay #overlay-print .print-button {
 	overflow: hidden;
 	position: absolute;
 	display: table;
@@ -109,15 +109,15 @@ body {
 	bottom: 25px;
 	border-radius: 10px; }
 
-#overlay #overlay-confirm.overlay-button {
+#overlay #overlay-print #print-confirm.print-button {
 	left: 25px;
 	background-color: #2ECC40; }
 
-#overlay #overlay-cancel.overlay-button {
+#overlay #overlay-print #print-cancel.print-button {
 	right: 25px;
 	background-color: #FF4136; }
 
-#overlay .overlay-button .button-wrapper {
+#overlay #overlay-print .print-button > .button-wrapper {
 	display: table-cell;
 	vertical-align: middle;
 	width: 100%;
@@ -137,6 +137,71 @@ body {
 	width: 100%;
 	height: 100%; }
 
+#overlay #overlay-options h1 {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	font-size: 24px;
+	font-weight: 700;
+	color: #111111;
+	text-align: center;
+	text-transform: uppercase; }
+
+#overlay #overlay-options #options-printers {
+	list-style: none; }
+
+#overlay #overlay-options #options-printers li {
+	display: block;
+	margin: 15px auto 15px auto;
+	padding: 25px 0 25px 0;
+	width: 80%;
+	font-size: 18px;
+	font-weight: 400;
+	text-align: center;
+	text-transform: uppercase;
+	border: 1px solid #777777;
+	background: #EEEEEE; }
+
+#overlay #overlay-options #options-printers li span {
+	padding: 5px 0 5px 0; }
+
+#overlay #overlay-options #options-printers li.current {
+	font-weight: 700;
+	color: #FFFFFF;
+	border-color: #229930;
+	background: #2ECC40; }
+
+#overlay #overlay-options #options-printers li.current span {
+	padding-left: 45px;
+	background: url("../img/overlay_tick.svg") left center no-repeat transparent;
+	background-size: contain; }
+
+#overlay #overlay-options #options-close {
+	overflow: hidden;
+	position: absolute;
+	display: table;
+	width: 250px;
+	height: 50px;
+	left: 50%;
+	margin-left: -125px;
+	bottom: 25px;
+	border-radius: 10px;
+	background: #0074D9; }
+
+#overlay #overlay-options #options-close span {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	font-size: 32px;
+	font-weight: 700;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	text-align: center; }
+
+
+
+
 #topbar {
 	z-index: 10;
 	position: absolute;
@@ -148,10 +213,10 @@ body {
 	border-bottom: 5px solid #777777; }
 
 #topbar #topbar-search {
-	width: calc(100% - 200px);
+	width: calc(100% - 275px);
 	height: 55px;
 	position: absolute;
-	left: 10px;
+	left: 100px;
 	top: 10px;
 	padding-left: 50px;
 	font-size: 32px;
@@ -159,30 +224,38 @@ body {
 	border: 2px solid #777777;
 	background: url("../img/topbar_search.svg") 10px center no-repeat #EEEEEE; }
 
-#topbar #topbar-tools {
+#topbar .topbar-buttons {
 	position: absolute;
 	top: 0;
-	right: 0;
 	list-style: none; }
 
-#topbar #topbar-tools li {
+#topbar #topbar-options {
+	left: 0; }
+
+#topbar #topbar-navigation {
+	right: 0; }
+
+#topbar .topbar-buttons li {
 	position: relative;
 	float: left;
 	width: 75px;
 	height: 75px;
 	background: center 10px no-repeat #EEEEEE; }
 
-#topbar #topbar-tools li:last-child {
+#topbar .topbar-buttons li:last-child {
 	margin-right: 0; }
 
-#topbar #topbar-tools #topbar-latest {
+#topbar #topbar-options li {
+	background-image: url("../img/topbar_options.svg"); }
+
+#topbar #topbar-navigation #navigation-latest {
 	font-weight: 700;
-	background-image: url("../img/topbar_tools_latest.svg"); }
+	background-image: url("../img/topbar_navigation_latest.svg"); }
 
-#topbar #topbar-tools #topbar-earlier {
-	background-image: url("../img/topbar_tools_earlier.svg"); }
+#topbar #topbar-navigation #navigation-earlier {
+	background-image: url("../img/topbar_navigation_earlier.svg"); }
 
-#topbar #topbar-tools li span {
+#topbar .topbar-buttons li span {
 	position: absolute;
 	left: 0;
 	bottom: 10px;
