@@ -38,7 +38,8 @@ var app = {
 
 var loading_cachce, overlay_cache, options_cache, topbar_cache, feed_cache, current_overlay, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
 var current_printer = 1;
-var feed_source = "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
+var feed_source = "http://hkjc.wayinhub.com/api/1/bites?feed=fd-5mx0f8yu3iq13i3zjf&limit=100&format=json"
+// "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
 
@@ -62,6 +63,7 @@ function photobooth_overlay (type, target) {
 	if (type == "print") {
 
 		current_image = target.attr("data-image");
+		current_wayin = target.attr("data-wayin");
 		topbar_cache.find("#topbar-search").blur();
 		overlay_cache.find("#print-image").css("background-image", "url(" + current_image + ")");
 		overlay_cache.find("#print-text span").html(target.attr("data-username"));
@@ -90,15 +92,15 @@ function photobooth_options () {
 
 
 function photobooth_print () {
-
+	console.log('test');
 	loading_cache.removeClass("invisible");
 
 	$.ajax({
 
-        url: "???",
+        url: "http://localhost/jockeyclubprinter/server/addQueue.php",
         type: "GET",
         dataType: "text",
-        data: {printer: current_printer, image: current_image},
+        data: {printer_id: current_printer, image_url: current_image,wayin_id: current_wayin},
         crossDomain: true,
         contentType: "application/json",
         success: function () {
@@ -266,12 +268,14 @@ function photobooth_load (int, target) {
 				else {
 
 					image = data.contents.results[i].item.images.standard_resolution.http_url;
+
 					username = data.contents.results[i].item.user.username;
 					type = "instagram";
 
 				};
+				wayin = data.contents.results[i].id;
 
-				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-image='" + image + "' data-username='" + username + "' class='" + type + "'><span></span></li>");
+				$("#feed #feed-list").append("<li style='background-image: url(" + image + ");' data-wayin='" + wayin + "' data-image='" + image + "' data-username='" + username + "' class='" + type + "'><span></span></li>");
 
 			};
 			
@@ -307,7 +311,7 @@ $(document).ready(function() {
 	overlay_cache = $("#overlay");
 	topbar_cache = $("#topbar");
 
-	$("#overlay #overlay-confirm").hammer().bind("tap", photobooth_print);
+	$("#overlay #print-confirm").hammer().bind("tap", photobooth_print);
 	$("#topbar #topbar-search").on("input", photobooth_search);
 	
 	$("#topbar #topbar-options li").hammer().bind("tap", function() {

@@ -5,3 +5,11 @@
 	#non-printable { display: none; }
 	#printable { display: block; }
 }
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 0mm 0mm 0mm 0mm;  
+} 

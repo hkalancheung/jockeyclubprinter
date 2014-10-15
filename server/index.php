@@ -31,8 +31,8 @@
   <ul class="nav nav-pills nav-stacked">
     <li class="active">
       <a href="#">
-        <span class="badge pull-right">{{queues.length}}</span>
-          Print Queue
+        <span class="badge pull-left">{{queues.length}}</span>
+          &nbsp; Print Queue
       </a>
     </li>
     <br>

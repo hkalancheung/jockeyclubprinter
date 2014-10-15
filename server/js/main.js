@@ -23,9 +23,10 @@
 
                 loadRemoteData();
 
-                // setInterval(function(){
-                //     $scope.refresh();
-                // },5000);
+                var printInterval=setInterval(function(){
+                    // $scope.refresh();
+                    printContent();
+                },5000);
 
 
                 // ---
@@ -74,7 +75,7 @@
 
                 $scope.sendToPrinter = function(){
                    
-                    printContent('printable');
+                    printContent();
                 };
 
 
@@ -245,14 +246,26 @@ function getQueryParams(qs) {
     return params;
 }
 
-function printContent(el){
-    console.log('printing...'+el);
-    // var restorepage = document.body.innerHTML;
-    // var printcontent = document.getElementById(el).innerHTML;
-    // document.body.innerHTML = printcontent;
-    window.print();
-    // document.body.innerHTML = restorepage;
+function printContent(){
 
+    if (angular.element(document.body).scope().queues.length>0){
+        var firstItem=angular.element(document.body).scope().queues[0];
+        console.log('printing...'+firstItem.image_url);
+
+
+        
+        window.print();
+            // remove first item from queue
+        angular.element(document.body).scope().removeQueue(
+            firstItem
+        );
+
+    }
+    else{
+        console.log ('queue is empty');
+        angular.element(document.body).scope().refresh();
+
+    }
 
 }
 
