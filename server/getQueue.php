@@ -1,19 +1,29 @@
 <?php
-require_once __DIR__ . '/lib/ActiveRecord.php';
-
-class Queue extends ActiveRecord\Model { }
-
-// initialize ActiveRecord
-// change the connection settings to whatever is appropriate for your mysql server 
-ActiveRecord\Config::initialize(function($cfg)
-{
-    $cfg->set_model_directory('.');
-    $cfg->set_connections(array('development' => 'mysql://root:root@127.0.0.1/hkjcprinter'));
-});
+include("config.php");
 
 # finding using a conditions array
-$posts = Queue::find('all',array('conditions' => array('printer_id = ?',$_GET["printer_id"])));
+$printingQueue = Queue::find('all',array('conditions' => array('printer_id = ? and status =? ',$_GET["printer_id"],'NEW')));
 
 
-print_r($posts);
+// print_r($printingQueue);
+
+
+
+if ($printingQueue){
+	$output=array();
+	foreach ($printingQueue as $thisRow){
+		// echo $printingQueue->id;
+		$tempOutput=array();
+		$tempOutput['id']=$thisRow->id;
+		$tempOutput['wayin_id']=$thisRow->wayin_id;
+		$tempOutput['image_url']=$thisRow->image_url;
+		array_push($output,$tempOutput);
+	}
+	
+	
+
+
+	echo json_encode( $output, JSON_PRETTY_PRINT);
+}
+
 ?>
