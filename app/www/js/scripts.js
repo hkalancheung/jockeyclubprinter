@@ -36,8 +36,8 @@ var app = {
 
 
 
-var loading_cachce, overlay_cache, options_cache, topbar_cache, feed_cache, overlay_current, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
-var printer_current = 1;
+var loading_cachce, overlay_cache, options_cache, topbar_cache, feed_cache, current_overlay, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
+var current_printer = 1;
 var feed_source = "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
@@ -57,7 +57,7 @@ function photobooth_bind () {
 
 function photobooth_overlay (type, target) {
 
-	overlay_current = type;
+	current_overlay = type;
 
 	if (type == "print") {
 
@@ -93,14 +93,22 @@ function photobooth_print () {
 
 	loading_cache.removeClass("invisible");
 
-	foo = "<img src='" + current_image + "' alt='' style='width: 100%; height: auto; border: none;' />";
+	$.ajax({
 
-	cordova.plugins.printer.print(foo, {}, function () {
+        url: "???",
+        type: "GET",
+        dataType: "text",
+        data: {printer: current_printer, image: current_image},
+        crossDomain: true,
+        contentType: "application/json",
+        success: function () {
 
-    	loading_cache.addClass("invisible");
-    	photobooth_close();
+        	loading_cache.addClass("invisible");
+    		photobooth_close();
 
-	});
+        }
+         
+    });
 
 };
 
@@ -108,14 +116,14 @@ function photobooth_print () {
 
 function photobooth_close () {
 
-	if (overlay_current == "print") {
+	if (current_overlay == "print") {
 
 		current_image = null;
 		overlay_cache.find("#overlay-print").addClass("invisible");
 
 	}
 
-	else if (overlay_current == "options") {
+	else if (current_overlay == "options") {
 
 		overlay_cache.find("#overlay-options").addClass("invisible");
 
@@ -185,7 +193,7 @@ function photobooth_time () {
 
 function photobooth_printer (target) {
 
-	printer_current = $(target).attr("data-printer");
+	current_printer = $(target).attr("data-printer");
 
 	overlay_cache.find("#overlay-options #options-printers li.current").removeClass("current");
 	$(target).addClass("current");
