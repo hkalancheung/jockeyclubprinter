@@ -1,5 +1,10 @@
 
 
+
+
+
+
+        var APIURL = 'http://localhost/jockeyclubprinter/server/api';
         // Define the module for our AngularJS application.
         var app = angular.module( "Demo", [] );
 
@@ -10,7 +15,7 @@
 
         // I control the main demo.
         app.controller(
-            "DemoController" ,
+            "MainController" ,
             function( $scope, queueService) {
 
                 // I contain the list of queues to be rendered.
@@ -21,17 +26,20 @@
                     name: ""
                 };
 
-                loadRemoteData();
+                $scope.autoPrint=true;
 
-                var printInterval=setInterval(function(){
-                    // $scope.refresh();
-                    printContent();
-                },5000);
+                
+
+
 
 
                 // ---
                 // PUBLIC METHODS.
                 // ---
+
+                $scope.tooglePrint = function (){
+                    console.log($scope.autoPrint);
+                }
 
 
                 // I process the add-queue form.
@@ -160,7 +168,7 @@
 
                     var request = $http({
                         method: "get",
-                        url: "getQueue.php",
+                        url: APIURL+"/getQueue.php",
                         params: {
                             action: "get",
                             printer_id: query.printer_id,
@@ -177,7 +185,7 @@
                     console.log('remove:'+id);
                     var request = $http({
                         method: "get",
-                        url: "updateQueue.php",
+                        url: APIURL+"/updateQueue.php",
                         params: {
                             action: "get",
                             id:id,
@@ -263,16 +271,63 @@ function printContent(){
     }
     else{
         console.log ('queue is empty');
-        angular.element(document.body).scope().refresh();
+        // angular.element(document.body).scope().refresh();
 
     }
 
 }
 
 
+var printInterval;
+var refreshInterval;
+
+function startPrinting(){
+    
+    printInterval=setInterval(function(){
+        if ($('input[name="print-checkbox"]').bootstrapSwitch('state'))
+            angular.element(document.body).scope().sendToPrinter();
+    },5000);
+}
+
+function stopPrinting(){
+    clearInterval(printInterval);
+}
+
+function startRefreshing(){
+    refreshInterval=setInterval(function(){
+        angular.element(document.body).scope().refresh();
+    },1500);
+}
+function stopRefreshing(){
+    clearInterval(refreshInterval);
+}
+
+// A $( document ).ready() block.
+$( document ).ready(function() {
+    $("[name='print-checkbox']").bootstrapSwitch();
+    startPrinting();
+    startRefreshing();
+
+    // $('input[name="print-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+      
+      
+      
+    //   if (state){
+    //     console.log('start printing');
+    //     startPrinting();
+    //   }
+    //   else{
+    //     console.log('stop printing');
+    //     stopPrinting();
+    //     }
+    // });
+
+
+});
+
 //var query = getQueryParams(document.location.search);
 //alert(query.foo);
 
 
-//angular.element("someElem").scope().loadRemoteData();
+//angular.element(document.body).scope().loadRemoteData();
 //angular.element(document.body).injector().get('queueService').getQueues()
