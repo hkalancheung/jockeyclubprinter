@@ -1,4 +1,4 @@
-var APIURL="http://tools.icgx.co/hkjc/server/api";
+var APIURL="http://app.icgx.co/hkjc/server/api";
 var app = {
     
     initialize: function () {
