@@ -1,4 +1,4 @@
-var APIURL="http://localhost/jockeyclubprinter/server/api";
+var APIURL="http://tools.icgx.co/hkjc/server/api";
 var app = {
     
     initialize: function () {
@@ -39,8 +39,8 @@ var app = {
 
 var loading_cachce, overlay_cache, options_cache, topbar_cache, feed_cache, current_overlay, current_image, feed_earlier, feed_next, feed_time_earliest, feed_time_latest, feed_time_interval;
 var current_printer = 1;
-var feed_source = "http://hkjc.wayinhub.com/api/1/bites?feed=fd-2j02g3giyye06q0zg8d&limit=100&format=json"
-// fd-5mx0f8yu3iq13i3zjf
+var feed_source = "http://hkjc.wayinhub.com/api/1/bites?feed=fd-5mx0f8yu3iq13i3zjf&limit=100&format=json"
+// #hkjc fd-5mx0f8yu3iq13i3zjf   // #hwparty 2j02g3giyye06q0zg8d
 // "http://joyce.wayinhub.com/api/1/bites?feed=fd-2izo28udfb98h5vedmv&limit=100&format=json";
 
 
@@ -99,12 +99,12 @@ function photobooth_print () {
 
 	$.ajax({
 
-        url: APIURL+"/addQueue.php",
+        url: APIURL+"/addQueue",
         type: "GET",
-        dataType: "text",
+        // dataType: "text",
         data: {printer_id: current_printer, image_url: current_image,wayin_id: current_wayin},
         crossDomain: true,
-        contentType: "application/json",
+        contentType: "text",
         success: function () {
 
         	loading_cache.addClass("invisible");

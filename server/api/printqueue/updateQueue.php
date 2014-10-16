@@ -1,9 +1,9 @@
 <?php
 include("config.php");
-if ($_GET['id']){
-	$printingQueue = Queue::find($_GET['id']);
+if ($id){
+	$printingQueue = Queue::find($id);
 	
-	$printingQueue->status = $_GET['status'];
+	$printingQueue->status = $status;
 	$printingQueue->save();
 	# UPDATE `printingQueues` SET title='Some real title' WHERE id=1
 	// $printingQueue->update_attributes(array('title' => 'Some other title', 'author_id' => 1));

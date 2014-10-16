@@ -2,7 +2,7 @@
 include("config.php");
 
 # finding using a conditions array
-$printingQueue = Queue::find('all',array('conditions' => array('printer_id = ? and status =? ',$_GET["printer_id"],'NEW')));
+$printingQueue = Queue::find('all',array('conditions' => array('printer_id = ? and status =? ',$printer_id,'NEW')));
 
 
 // print_r($printingQueue);
@@ -23,7 +23,7 @@ if ($printingQueue){
 	
 
 
-	echo json_encode( $output, JSON_PRETTY_PRINT);
+	echo json_encode( $output);
 }
 
 ?>

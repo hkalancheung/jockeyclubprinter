@@ -34,8 +34,11 @@
   </head>
  <body ng-controller="MainController">
 
-<div id="printable" width="100%">
-  <img src = "{{queues[0].image_url}}" width="100%">
+<div id="printable" width="100%" height="148mm">
+  <img src="img/cover.jpg" width="100%" height="auto" style="">
+  <!-- <div height="100%" style="margin-top:auto">&nbsp;</div> -->
+  
+  <img src = "{{queues[0].image_url}}" width="100%" height="auto" style="margin-top:2mm">
 </div>
 
 <div id="non-printable">
@@ -63,7 +66,7 @@
         
         <img src = "{{queue.image_url}}" height="100px">
 
-         <button ng-click="removeQueue( queue )" class="btn btn-danger">Remove</button>
+         <button ng-click="removeQueue( queue,'REMOVED' )" class="btn btn-danger">Remove</button>
 
       </li>
     </ul>

@@ -20,7 +20,7 @@ require 'Slim/Slim.php';
  * of setting names and values into the application constructor.
  */
 $app = new \Slim\Slim();
-
+$app->config('debug', true);
 /**
  * Step 3: Define the Slim application routes
  *
@@ -159,6 +159,22 @@ $app->delete(
         echo 'This is a DELETE route';
     }
 );
+
+$app->get('/addQueue', function () {
+
+     include('printqueue/addQueue.php');
+});
+
+$app->get('/printqueue/:printer_id', function ($printer_id) {
+
+     include('printqueue/getQueue.php');
+});
+
+$app->get('/updatequeue/id/:id/status/:status', function ($id,$status) {
+
+     include('printqueue/updateQueue.php');
+});
+
 
 /**
  * Step 4: Run the Slim application

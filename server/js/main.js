@@ -4,7 +4,7 @@
 
 
 
-        var APIURL = 'http://localhost/jockeyclubprinter/server/api';
+        var APIURL = 'api';
         // Define the module for our AngularJS application.
         var app = angular.module( "Demo", [] );
 
@@ -67,11 +67,11 @@
 
 
                 // I remove the given queue from the current collection.
-                $scope.removeQueue = function( queue ) {
+                $scope.removeQueue = function( queue,status ) {
 
                     // Rather than doing anything clever on the client-side, I'm just
                     // going to reload the remote data.
-                    queueService.removeQueue( queue.id )
+                    queueService.removeQueue( queue.id,status )
                          .then( loadRemoteData )
                     ;
 
@@ -168,10 +168,10 @@
 
                     var request = $http({
                         method: "get",
-                        url: APIURL+"/getQueue.php",
+                        url: APIURL+"/printqueue/"+query.printer_id,
                         params: {
-                            action: "get",
-                            printer_id: query.printer_id,
+                            // action: "get",
+                            //printer_id: query.printer_id,
                         }
                     });
 
@@ -181,15 +181,13 @@
 
 
                 // I remove the queue with the given ID from the remote collection.
-                function removeQueue( id ) {
+                function removeQueue( id,status ) {
                     console.log('remove:'+id);
                     var request = $http({
                         method: "get",
-                        url: APIURL+"/updateQueue.php",
+                        url: APIURL+"/updatequeue/id/"+id+'/status/'+status,
                         params: {
-                            action: "get",
-                            id:id,
-                            status:'REMOVED'
+                            // action: "get",
                         },
                         data: {
                             id: id
@@ -265,7 +263,7 @@ function printContent(){
         window.print();
             // remove first item from queue
         angular.element(document.body).scope().removeQueue(
-            firstItem
+            firstItem,'PRINTED'
         );
 
     }

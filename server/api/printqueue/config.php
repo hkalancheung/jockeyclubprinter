@@ -12,6 +12,7 @@ ActiveRecord\Config::initialize(function($cfg)
     	'development' => 'mysql://root:root@127.0.0.1/hkjcprinter',
     	'production' => 'mysql://root:icgxPassw0rd@localhost/hkjcprinter')
     );
-
+    $cfg->set_default_connection('production');
 });
+
 ?>
